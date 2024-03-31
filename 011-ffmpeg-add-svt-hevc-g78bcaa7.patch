@@ -1,0 +1,10 @@
+--- a/libavcodec/libsvt_hevc.c
++++ b/libavcodec/libsvt_hevc.c
+@@ -24,6 +24,7 @@
+ 
+ #include "libavutil/common.h"
+ #include "libavutil/frame.h"
++#include "libavutil/mem.h"
+ #include "libavutil/opt.h"
+ 
+ #include "codec_internal.h"
