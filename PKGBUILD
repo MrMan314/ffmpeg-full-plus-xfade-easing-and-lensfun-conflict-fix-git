@@ -1,7 +1,7 @@
 # Maintainer: Daniel Bermond <dbermond@archlinux.org>
 
 pkgname=ffmpeg-full-git
-pkgver=7.1.r115041.ge757726e89
+pkgver=7.1.r115045.g86e418ffd7
 pkgrel=1
 _svt_hevc_ver='ed80959ebb5586aa7763c91a397d44be1798587c'
 _svt_vp9_ver='3b9a3fa43da4cc5fe60c7d22afe2be15341392ea'
@@ -68,6 +68,7 @@ depends=(
     'libva'
     'libvdpau'
     'libvorbis'
+    'libvpl'
     'libvpx'
     'libx11'
     'libxcb'
@@ -78,8 +79,6 @@ depends=(
     'lilv'
     'lv2'
     'ocl-icd'
-    'onevpl'
-    'onevpl-intel-gpu'
     'openal'
     'opencore-amr'
     'opencv2'
@@ -109,6 +108,7 @@ depends=(
     'vapoursynth'
     'vid.stab'
     'vmaf'
+    'vpl-runtime'
     'vulkan-icd-loader'
     'x264'
     'x265'
