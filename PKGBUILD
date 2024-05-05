@@ -1,8 +1,8 @@
 # Maintainer: Daniel Bermond <dbermond@archlinux.org>
 
 pkgname=ffmpeg-full-git
-pkgver=7.1.r115045.g86e418ffd7
-pkgrel=2
+pkgver=7.1.r115075.gf8a613d6a8
+pkgrel=1
 _svt_hevc_ver='ed80959ebb5586aa7763c91a397d44be1798587c'
 _svt_vp9_ver='3b9a3fa43da4cc5fe60c7d22afe2be15341392ea'
 pkgdesc='Complete solution to record, convert and stream audio and video (all possible features including libfdk-aac; git version)'
@@ -101,7 +101,6 @@ depends=(
     'svt-av1'
     'svt-hevc'
     'svt-vp9'
-    'tensorflow'
     'tesseract'
     'twolame'
     'v4l-utils'
@@ -182,7 +181,7 @@ build() {
     cd ffmpeg
     printf '%s\n' '  -> Running ffmpeg configure script...'
     
-    export CFLAGS+=' -I/opt/cuda/include -I/usr/include/tensorflow'
+    export CFLAGS+=' -I/opt/cuda/include'
     export LDFLAGS+=' -L/opt/cuda/lib64'
     export PKG_CONFIG_PATH="/opt/intel/openvino/runtime/lib/intel64/pkgconfig${PKG_CONFIG_PATH:+":${PKG_CONFIG_PATH}"}"
     
@@ -271,7 +270,7 @@ build() {
         --enable-libsvtav1 \
         --enable-libsvthevc \
         --enable-libsvtvp9 \
-        --enable-libtensorflow \
+        --disable-libtensorflow \
         --enable-libtesseract \
         --enable-libtheora \
         --disable-libtls \
