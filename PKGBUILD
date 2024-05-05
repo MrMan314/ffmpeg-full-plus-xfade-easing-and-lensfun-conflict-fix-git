@@ -2,7 +2,7 @@
 
 pkgname=ffmpeg-full-git
 pkgver=7.1.r115045.g86e418ffd7
-pkgrel=1
+pkgrel=2
 _svt_hevc_ver='ed80959ebb5586aa7763c91a397d44be1798587c'
 _svt_vp9_ver='3b9a3fa43da4cc5fe60c7d22afe2be15341392ea'
 pkgdesc='Complete solution to record, convert and stream audio and video (all possible features including libfdk-aac; git version)'
@@ -182,12 +182,12 @@ build() {
     cd ffmpeg
     printf '%s\n' '  -> Running ffmpeg configure script...'
     
+    export CFLAGS+=' -I/opt/cuda/include -I/usr/include/tensorflow'
+    export LDFLAGS+=' -L/opt/cuda/lib64'
     export PKG_CONFIG_PATH="/opt/intel/openvino/runtime/lib/intel64/pkgconfig${PKG_CONFIG_PATH:+":${PKG_CONFIG_PATH}"}"
     
     ./configure \
         --prefix='/usr' \
-        --extra-cflags='-I/opt/cuda/include -I/usr/include/tensorflow' \
-        --extra-ldflags='-L/opt/cuda/lib64' \
         --enable-lto \
         \
         --disable-rpath \
