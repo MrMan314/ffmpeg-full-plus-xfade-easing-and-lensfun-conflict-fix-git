@@ -1,7 +1,7 @@
 # Maintainer: Daniel Bermond <dbermond@archlinux.org>
 
 pkgname=ffmpeg-full-git
-pkgver=7.1.r115075.gf8a613d6a8
+pkgver=7.1.r115182.g0d9591841b
 pkgrel=1
 _svt_hevc_ver='ed80959ebb5586aa7763c91a397d44be1798587c'
 _svt_vp9_ver='3b9a3fa43da4cc5fe60c7d22afe2be15341392ea'
@@ -145,6 +145,7 @@ source=('git+https://git.ffmpeg.org/ffmpeg.git'
         '040-ffmpeg-add-av_stream_get_first_dts-for-chromium.patch'
         '050-ffmpeg-fix-segfault-with-avisynthplus.patch'
         '060-ffmpeg-fix-nvidia-vulkan-decoding-segfault.patch'
+        '070-ffmpeg-gcc14-fix-flite-callback-pointer-type.patch'
         'LICENSE')
 sha256sums=('SKIP'
             '9047e18d34716812d4ea7eafc1d0fd8b376d922a4b6b4dc20237662fcaf0c996'
@@ -153,6 +154,7 @@ sha256sums=('SKIP'
             'b54b47f4f3837ddc41227bd2202ea3c62e2ddb06c6cfbd7a9adc304d641d79ba'
             '0e277c0d5e33612ca7a11025958133b17bfbe23168b0aee5bd07f674f6fd7440'
             'f2f73793a45c9dffb033f23c1b10a612abe6528cbd06c04b06e8189d1ef208be'
+            'db46443b5e83b70c89271802742c62aac059ee07f1ff9c7bf45480c0fd57c394'
             '04a7176400907fd7db0d69116b99de49e582a6e176b3bfb36a03e50a4cb26a36')
 
 prepare() {
@@ -169,6 +171,7 @@ prepare() {
     patch -d ffmpeg -Np1 -i "${srcdir}/040-ffmpeg-add-av_stream_get_first_dts-for-chromium.patch"
     patch -d ffmpeg -Np1 -i "${srcdir}/050-ffmpeg-fix-segfault-with-avisynthplus.patch"
     patch -d ffmpeg -Np1 -i "${srcdir}/060-ffmpeg-fix-nvidia-vulkan-decoding-segfault.patch"
+    patch -d ffmpeg -Np1 -i "${srcdir}/070-ffmpeg-gcc14-fix-flite-callback-pointer-type.patch"
 }
 
 pkgver() {

@@ -1,0 +1,14 @@
+--- a/libavfilter/asrc_flite.c
++++ b/libavfilter/asrc_flite.c
+@@ -147,9 +147,9 @@ static int select_voice(struct voice_entry **entry_ret, const char *voice_name,
+ }
+ 
+ static int audio_stream_chunk_by_word(const cst_wave *wave, int start, int size,
+-                                      int last, cst_audio_streaming_info *asi)
++                                      int last, void *asi)
+ {
+-    FliteContext *flite = asi->userdata;
++    FliteContext *flite = ((cst_audio_streaming_info *)asi)->userdata;
+     void *const ptr[8] = { &wave->samples[start] };
+ 
+     flite->nb_channels = wave->num_channels;
