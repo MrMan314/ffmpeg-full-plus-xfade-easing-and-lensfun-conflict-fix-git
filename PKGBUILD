@@ -1,8 +1,8 @@
 # Maintainer: Daniel Bermond <dbermond@archlinux.org>
 
 pkgname=ffmpeg-full-git
-pkgver=7.1.r115182.g0d9591841b
-pkgrel=3
+pkgver=7.1.r115371.g62397bcf6a
+pkgrel=1
 _svt_hevc_ver='ed80959ebb5586aa7763c91a397d44be1798587c'
 _svt_vp9_ver='3b9a3fa43da4cc5fe60c7d22afe2be15341392ea'
 pkgdesc='Complete solution to record, convert and stream audio and video (all possible features including libfdk-aac; git version)'
@@ -150,8 +150,8 @@ sha256sums=('SKIP'
             '9047e18d34716812d4ea7eafc1d0fd8b376d922a4b6b4dc20237662fcaf0c996'
             'a164ebdc4d281352bf7ad1b179aae4aeb33f1191c444bed96cb8ab333c046f81'
             '59da61f2b2c556fbe0cdbf84bcc00977ee3d2447085decb21f6298226559f2aa'
-            'b54b47f4f3837ddc41227bd2202ea3c62e2ddb06c6cfbd7a9adc304d641d79ba'
-            '0e277c0d5e33612ca7a11025958133b17bfbe23168b0aee5bd07f674f6fd7440'
+            '67e87527ba853c2b59fa5efd9e116c157f0abb18a40e3bc55673cf0d98364923'
+            'e97272668cd16493e520f0188eea265e2372c98b3c09585781e7a453ddb5478f'
             'f2f73793a45c9dffb033f23c1b10a612abe6528cbd06c04b06e8189d1ef208be'
             '04a7176400907fd7db0d69116b99de49e582a6e176b3bfb36a03e50a4cb26a36')
 
