@@ -1,7 +1,7 @@
 # Maintainer: Daniel Bermond <dbermond@archlinux.org>
 
 pkgname=ffmpeg-full-git
-pkgver=7.1.r115371.g62397bcf6a
+pkgver=7.1.r115391.g63697d3350
 pkgrel=1
 _svt_hevc_ver='ed80959ebb5586aa7763c91a397d44be1798587c'
 _svt_vp9_ver='3b9a3fa43da4cc5fe60c7d22afe2be15341392ea'
@@ -53,6 +53,7 @@ depends=(
     'libiec61883'
     'libilbc'
     'libjxl'
+    'liblc3'
     'libmodplug'
     'libmysofa'
     'libomxil-bellagio'
@@ -241,6 +242,7 @@ build() {
         --enable-libjxl \
         --enable-libklvanc \
         --enable-libkvazaar \
+        --enable-liblc3 \
         --enable-liblensfun \
         --enable-libmodplug \
         --enable-libmp3lame \
