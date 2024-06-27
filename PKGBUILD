@@ -2,7 +2,7 @@
 
 pkgname=ffmpeg-full-git
 pkgver=7.1.r115391.g63697d3350
-pkgrel=1
+pkgrel=2
 _svt_hevc_ver='ed80959ebb5586aa7763c91a397d44be1798587c'
 _svt_vp9_ver='3b9a3fa43da4cc5fe60c7d22afe2be15341392ea'
 pkgdesc='Complete solution to record, convert and stream audio and video (all possible features including libfdk-aac; git version)'
@@ -13,7 +13,6 @@ depends=(
     'alsa-lib'
     'aom'
     'aribb24'
-    'libaribcaption'
     'avisynthplus'
     'bzip2'
     'cairo'
@@ -62,6 +61,7 @@ depends=(
     'libpulse'
     'librabbitmq-c'
     'libraw1394'
+    'librist'
     'librsvg'
     'libsoxr'
     'libssh'
@@ -108,7 +108,6 @@ depends=(
     'vapoursynth'
     'vid.stab'
     'vmaf'
-    'vpl-runtime'
     'vulkan-icd-loader'
     'x264'
     'x265'
@@ -118,10 +117,11 @@ depends=(
     'zimg'
     'zlib'
     'zvbi'
+    # aur:
     'chromaprint-fftw'
     'davs2'
+    'libaribcaption'
     'libklvanc'
-    'librist'
     'rockchip-mpp'
     'shine'
     'uavs3d-git'
@@ -131,8 +131,19 @@ depends=(
     'xevd'
     'xeve'
 )
-makedepends=('git' 'clang' 'amf-headers' 'ffnvcodec-headers' 'nasm' 'opencl-headers'
-             'vulkan-headers' 'decklink-sdk')
+optdepends=('nvidia-utils: for NVIDIA NVDEC/NVENC support'
+            'vpl-runtime: for Intel Quick Sync Video'
+)
+makedepends=('git'
+             'clang'
+             'nasm'
+             'amf-headers'
+             'ffnvcodec-headers'
+             'opencl-headers'
+             'vulkan-headers'
+             # aur:
+             'decklink-sdk'
+)
 provides=('libavcodec.so' 'libavdevice.so' 'libavfilter.so' 'libavformat.so'
           'libavutil.so' 'libpostproc.so' 'libswscale.so' 'libswresample.so'
           'ffmpeg' 'ffmpeg-full' 'ffmpeg-git')
