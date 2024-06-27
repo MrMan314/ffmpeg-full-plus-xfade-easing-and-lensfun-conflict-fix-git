@@ -2,7 +2,7 @@
 
 pkgname=ffmpeg-full-git
 pkgver=7.1.r115391.g63697d3350
-pkgrel=2
+pkgrel=3
 _svt_hevc_ver='ed80959ebb5586aa7763c91a397d44be1798587c'
 _svt_vp9_ver='3b9a3fa43da4cc5fe60c7d22afe2be15341392ea'
 pkgdesc='Complete solution to record, convert and stream audio and video (all possible features including libfdk-aac; git version)'
@@ -45,6 +45,8 @@ depends=(
     'libcdio-paranoia'
     'libdc1394'
     'libdrm'
+    'libdvdnav'
+    'libdvdread'
     'libfdk-aac'
     'libgcrypt'
     'libgl'
@@ -238,6 +240,8 @@ build() {
         --enable-libdav1d \
         --enable-libdavs2 \
         --enable-libdc1394 \
+        --enable-libdvdnav \
+        --enable-libdvdread \
         --enable-libfdk-aac \
         --enable-libflite \
         --enable-libfontconfig \
