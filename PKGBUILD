@@ -1,8 +1,8 @@
 # Maintainer: Daniel Bermond <dbermond@archlinux.org>
 
 pkgname=ffmpeg-full-git
-pkgver=7.1.r115391.g63697d3350
-pkgrel=3
+pkgver=7.1.r116028.g1080116658
+pkgrel=1
 _svt_hevc_ver='ed80959ebb5586aa7763c91a397d44be1798587c'
 _svt_vp9_ver='3b9a3fa43da4cc5fe60c7d22afe2be15341392ea'
 pkgdesc='Complete solution to record, convert and stream audio and video (all possible features including libfdk-aac; git version)'
@@ -128,6 +128,7 @@ depends=(
     'shine'
     'uavs3d-git'
     'vo-amrwbenc'
+    'vvenc'
     'xavs'
     'xavs2'
     'xevd'
@@ -137,6 +138,7 @@ optdepends=('nvidia-utils: for NVIDIA NVDEC/NVENC support'
             'vpl-runtime: for Intel Quick Sync Video'
 )
 makedepends=('git'
+             'patchutils'
              'clang'
              'nasm'
              'amf-headers'
@@ -151,11 +153,10 @@ provides=('libavcodec.so' 'libavdevice.so' 'libavfilter.so' 'libavformat.so'
           'ffmpeg' 'ffmpeg-full' 'ffmpeg-git')
 conflicts=('ffmpeg')
 source=('git+https://git.ffmpeg.org/ffmpeg.git'
-        #"005-ffmpeg-add-svt-hevc-g${_svt_hevc_ver:0:7}.patch"
-        #"006-ffmpeg-add-svt-vp9-g${_svt_vp9_ver:0:7}.patch"
         "010-ffmpeg-add-svt-hevc-g${_svt_hevc_ver:0:7}.patch"::"https://raw.githubusercontent.com/OpenVisualCloud/SVT-HEVC/${_svt_hevc_ver}/ffmpeg_plugin/master-0001-lavc-svt_hevc-add-libsvt-hevc-encoder-wrapper.patch"
         "020-ffmpeg-add-svt-hevc-docs-g${_svt_hevc_ver:0:7}.patch"::"https://raw.githubusercontent.com/OpenVisualCloud/SVT-HEVC/${_svt_hevc_ver}/ffmpeg_plugin/0002-doc-Add-libsvt_hevc-encoder-docs.patch"
         "030-ffmpeg-add-svt-vp9-g${_svt_vp9_ver:0:7}.patch"::"https://raw.githubusercontent.com/OpenVisualCloud/SVT-VP9/${_svt_vp9_ver}/ffmpeg_plugin/master-0001-Add-ability-for-ffmpeg-to-run-svt-vp9.patch"
+        "031-ffmpeg-add-svt-vp9.patch"
         '040-ffmpeg-add-av_stream_get_first_dts-for-chromium.patch'
         '050-ffmpeg-fix-segfault-with-avisynthplus.patch'
         '060-ffmpeg-fix-nvidia-vulkan-decoding-segfault.patch'
@@ -164,6 +165,7 @@ sha256sums=('SKIP'
             '9047e18d34716812d4ea7eafc1d0fd8b376d922a4b6b4dc20237662fcaf0c996'
             'a164ebdc4d281352bf7ad1b179aae4aeb33f1191c444bed96cb8ab333c046f81'
             '59da61f2b2c556fbe0cdbf84bcc00977ee3d2447085decb21f6298226559f2aa'
+            'f3918985d0a156ceb2d05903500544eb1cf6df2ee950cbf6aa63718eb10f6abf'
             '67e87527ba853c2b59fa5efd9e116c157f0abb18a40e3bc55673cf0d98364923'
             'e97272668cd16493e520f0188eea265e2372c98b3c09585781e7a453ddb5478f'
             'f2f73793a45c9dffb033f23c1b10a612abe6528cbd06c04b06e8189d1ef208be'
@@ -171,15 +173,11 @@ sha256sums=('SKIP'
 
 prepare() {
     rm -f ffmpeg/libavcodec/libsvt_{hevc,vp9}.c
-    #cp --remove-destination "$(readlink "010-ffmpeg-add-svt-hevc-g${_svt_hevc_ver:0:7}.patch")" \
-    #    "010-ffmpeg-add-svt-hevc-g${_svt_hevc_ver:0:7}.patch"
-    #patch -Np1 -i "005-ffmpeg-add-svt-hevc-g${_svt_hevc_ver:0:7}.patch"
-    #cp --remove-destination "$(readlink "030-ffmpeg-add-svt-vp9-g${_svt_vp9_ver:0:7}.patch")" \
-    #    "030-ffmpeg-add-svt-vp9-g${_svt_vp9_ver:0:7}.patch"
-    #patch -Np1 -i "006-ffmpeg-add-svt-vp9-g${_svt_vp9_ver:0:7}.patch"
+    filterdiff -i b/libavcodec/libsvt_vp9.c "030-ffmpeg-add-svt-vp9-g${_svt_vp9_ver:0:7}.patch" >"032-ffmpeg-add-svt-vp9-g${_svt_vp9_ver:0:7}.patch"
     patch -d ffmpeg -Np1 -i "${srcdir}/010-ffmpeg-add-svt-hevc-g${_svt_hevc_ver:0:7}.patch"
     patch -d ffmpeg -Np1 -i "${srcdir}/020-ffmpeg-add-svt-hevc-docs-g${_svt_hevc_ver:0:7}.patch"
-    patch -d ffmpeg -Np1 -i "${srcdir}/030-ffmpeg-add-svt-vp9-g${_svt_vp9_ver:0:7}.patch"
+    patch -d ffmpeg -Np1 -i "${srcdir}/031-ffmpeg-add-svt-vp9.patch"
+    patch -d ffmpeg -Np1 -i "${srcdir}/032-ffmpeg-add-svt-vp9-g${_svt_vp9_ver:0:7}.patch"
     patch -d ffmpeg -Np1 -i "${srcdir}/040-ffmpeg-add-av_stream_get_first_dts-for-chromium.patch"
     patch -d ffmpeg -Np1 -i "${srcdir}/050-ffmpeg-fix-segfault-with-avisynthplus.patch"
     patch -d ffmpeg -Np1 -i "${srcdir}/060-ffmpeg-fix-nvidia-vulkan-decoding-segfault.patch"
@@ -303,6 +301,7 @@ build() {
         --enable-libvo-amrwbenc \
         --enable-libvorbis \
         --enable-libvpx \
+        --enable-libvvenc \
         --enable-libwebp \
         --enable-libx264 \
         --enable-libx265 \
