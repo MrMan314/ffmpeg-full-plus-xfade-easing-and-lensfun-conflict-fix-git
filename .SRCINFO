@@ -1,6 +1,6 @@
 pkgbase = ffmpeg-full-git
 	pkgdesc = Complete solution to record, convert and stream audio and video (all possible features including libfdk-aac; git version)
-	pkgver = 7.1.r116781.gd89930f866
+	pkgver = 7.1.r117089.ged633a1312
 	pkgrel = 1
 	url = https://www.ffmpeg.org/
 	arch = x86_64
@@ -39,6 +39,7 @@ pkgbase = ffmpeg-full-git
 	depends = kvazaar
 	depends = ladspa
 	depends = lame
+	depends = lcevcdec
 	depends = libavc1394
 	depends = lcms2
 	depends = lensfun-git
@@ -166,7 +167,7 @@ pkgbase = ffmpeg-full-git
 	sha256sums = f3918985d0a156ceb2d05903500544eb1cf6df2ee950cbf6aa63718eb10f6abf
 	sha256sums = c413f87df4ec496b0e8be705be407ee9c43f09a24ea14b01ea9688d5b410f0f0
 	sha256sums = 26419f819d1f3e4d0534995b73d05a8195bc7c892b74c37c3880085af027515b
-	sha256sums = aa054ee88401c7f7b189fee350438c9b3cabbc544a8b533d39e4a4dd267a09fb
+	sha256sums = 61edd42bf04aa25b9c1e1bfaa3a1f6167202aa64432b5d0f8bc9facb09230bc3
 	sha256sums = 04a7176400907fd7db0d69116b99de49e582a6e176b3bfb36a03e50a4cb26a36
 
 pkgname = ffmpeg-full-git
