@@ -1,7 +1,7 @@
 # Maintainer: Daniel Bermond <dbermond@archlinux.org>
 
 pkgname=ffmpeg-full-git
-pkgver=7.1.r117089.ged633a1312
+pkgver=7.2.r117638.g153a6dc8fa
 pkgrel=1
 _svt_hevc_ver='ed80959ebb5586aa7763c91a397d44be1798587c'
 _svt_vp9_ver='3b9a3fa43da4cc5fe60c7d22afe2be15341392ea'
@@ -36,10 +36,10 @@ depends=(
     'ladspa'
     'lame'
     'lcevcdec'
-    'libavc1394'
     'lcms2'
     'lensfun-git'
     'libass'
+    'libavc1394'
     'libbluray'
     'libbs2b'
     'libcaca'
@@ -160,16 +160,14 @@ source=('git+https://git.ffmpeg.org/ffmpeg.git'
         "031-ffmpeg-add-svt-vp9.patch"
         '040-ffmpeg-add-av_stream_get_first_dts-for-chromium.patch'
         '050-ffmpeg-fix-segfault-with-avisynthplus.patch'
-        '060-ffmpeg-fix-nvidia-vulkan-decoding-segfault.patch'
         'LICENSE')
 sha256sums=('SKIP'
             '9047e18d34716812d4ea7eafc1d0fd8b376d922a4b6b4dc20237662fcaf0c996'
             'a164ebdc4d281352bf7ad1b179aae4aeb33f1191c444bed96cb8ab333c046f81'
             '59da61f2b2c556fbe0cdbf84bcc00977ee3d2447085decb21f6298226559f2aa'
-            'f3918985d0a156ceb2d05903500544eb1cf6df2ee950cbf6aa63718eb10f6abf'
-            'c413f87df4ec496b0e8be705be407ee9c43f09a24ea14b01ea9688d5b410f0f0'
+            '3b84e50b5d2badb553eae188f58a570ab8680e16f6ac58442eda9af3fc23157c'
+            '4ce15cce0b78a6b6f0124a7474ca00a31205310f7230f4603b47b597ab2e640d'
             '26419f819d1f3e4d0534995b73d05a8195bc7c892b74c37c3880085af027515b'
-            '61edd42bf04aa25b9c1e1bfaa3a1f6167202aa64432b5d0f8bc9facb09230bc3'
             '04a7176400907fd7db0d69116b99de49e582a6e176b3bfb36a03e50a4cb26a36')
 
 prepare() {
@@ -180,7 +178,6 @@ prepare() {
     patch -d ffmpeg -Np1 -i <(filterdiff -i b/libavcodec/libsvt_vp9.c "030-ffmpeg-add-svt-vp9-g${_svt_vp9_ver:0:7}.patch")
     patch -d ffmpeg -Np1 -i "${srcdir}/040-ffmpeg-add-av_stream_get_first_dts-for-chromium.patch"
     patch -d ffmpeg -Np1 -i "${srcdir}/050-ffmpeg-fix-segfault-with-avisynthplus.patch"
-    patch -d ffmpeg -Np1 -i "${srcdir}/060-ffmpeg-fix-nvidia-vulkan-decoding-segfault.patch"
 }
 
 pkgver() {
