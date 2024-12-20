@@ -1,7 +1,7 @@
 # Maintainer: Daniel Bermond <dbermond@archlinux.org>
 
 pkgname=ffmpeg-full-git
-pkgver=7.2.r117638.g153a6dc8fa
+pkgver=7.2.r118095.g95217872ad
 pkgrel=1
 _svt_hevc_ver='ed80959ebb5586aa7763c91a397d44be1798587c'
 _svt_vp9_ver='3b9a3fa43da4cc5fe60c7d22afe2be15341392ea'
@@ -142,11 +142,11 @@ makedepends=('git'
              'patchutils'
              'clang'
              'nasm'
-             'amf-headers'
              'ffnvcodec-headers'
              'opencl-headers'
              'vulkan-headers'
              # aur:
+             'amf-headers-git'
              'decklink-sdk'
 )
 provides=('libavcodec.so' 'libavdevice.so' 'libavfilter.so' 'libavformat.so'
