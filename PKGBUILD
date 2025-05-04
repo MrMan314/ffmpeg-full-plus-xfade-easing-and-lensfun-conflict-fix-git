@@ -1,8 +1,8 @@
 # Maintainer: Daniel Bermond <dbermond@archlinux.org>
 
 pkgname=ffmpeg-full-git
-pkgver=7.2.r119073.g2657e1679e
-pkgrel=2
+pkgver=7.2.r119430.ga0349d64fd
+pkgrel=1
 _svt_hevc_ver='ed80959ebb5586aa7763c91a397d44be1798587c'
 pkgdesc='Complete solution to record, convert and stream audio and video (all possible features including libfdk-aac; git version)'
 arch=('x86_64')
@@ -83,6 +83,7 @@ depends=(
     'lv2'
     'ocl-icd'
     'openal'
+    'openapv'
     'opencore-amr'
     'opencv2'
     'openh264'
@@ -255,6 +256,7 @@ build() {
         --enable-liblensfun \
         --enable-libmodplug \
         --enable-libmp3lame \
+        --enable-liboapv \
         --enable-libopencore-amrnb \
         --enable-libopencore-amrwb \
         --enable-libopencv \
