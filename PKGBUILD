@@ -2,7 +2,7 @@
 
 pkgname=ffmpeg-full-git
 pkgver=7.2.r119073.g2657e1679e
-pkgrel=1
+pkgrel=2
 _svt_hevc_ver='ed80959ebb5586aa7763c91a397d44be1798587c'
 pkgdesc='Complete solution to record, convert and stream audio and video (all possible features including libfdk-aac; git version)'
 arch=('x86_64')
@@ -158,13 +158,15 @@ source=('git+https://git.ffmpeg.org/ffmpeg.git'
         '030-ffmpeg-add-svt-vp9.patch'
         '040-ffmpeg-add-av_stream_get_first_dts-for-chromium.patch'
         '050-ffmpeg-fix-segfault-with-avisynthplus.patch'
+        '060-ffmpeg-fix-cuda-nvcc-with-gcc14.patch'
         'LICENSE')
 sha256sums=('SKIP'
-            'e33f381ab802b4dd0a8d86d466abafb87fbcbaeb3ddf3a0738392041189eba43'
+            '8d5ea3d1e4e1b95abc3fbdb7d784a2cef7218f3decd4646e6781188996f51fb9'
             'a164ebdc4d281352bf7ad1b179aae4aeb33f1191c444bed96cb8ab333c046f81'
-            'd296198c465eedb47743c84ba1da43515aa4212f997f5e827c800a1e9d4234b4'
+            'c57c964cacbb3ccef1d4f43e044e45cec52002d3eb993b7006be29dc54d0e79b'
             '391ce03d5e205210c5f136ee7fe7fd84bb420ff423462ed2123b63a19052debd'
             '26419f819d1f3e4d0534995b73d05a8195bc7c892b74c37c3880085af027515b'
+            'ce012d2a1fe30a654f7766e29fc38a3a19aefbc276f09bdfcaa91aaf7f5adf85'
             '04a7176400907fd7db0d69116b99de49e582a6e176b3bfb36a03e50a4cb26a36')
 
 prepare() {
@@ -174,6 +176,7 @@ prepare() {
     patch -d ffmpeg -Np1 -i "${srcdir}/030-ffmpeg-add-svt-vp9.patch"
     patch -d ffmpeg -Np1 -i "${srcdir}/040-ffmpeg-add-av_stream_get_first_dts-for-chromium.patch"
     patch -d ffmpeg -Np1 -i "${srcdir}/050-ffmpeg-fix-segfault-with-avisynthplus.patch"
+    patch -d ffmpeg -Np1 -i "${srcdir}/060-ffmpeg-fix-cuda-nvcc-with-gcc14.patch"
 }
 
 pkgver() {
