@@ -1,7 +1,7 @@
 # Maintainer: Daniel Bermond <dbermond@archlinux.org>
 
 pkgname=ffmpeg-full-git
-pkgver=7.2.r119430.ga0349d64fd
+pkgver=7.2.r119449.g1b643e3f65
 pkgrel=1
 _svt_hevc_ver='ed80959ebb5586aa7763c91a397d44be1798587c'
 pkgdesc='Complete solution to record, convert and stream audio and video (all possible features including libfdk-aac; git version)'
@@ -24,7 +24,9 @@ depends=(
     'freetype2'
     'frei0r-plugins'
     'fribidi'
+    'gcc-libs'
     'glib2'
+    'glibc'
     'glslang'
     'gmp'
     'gnutls'
@@ -135,23 +137,34 @@ depends=(
     'xevd'
     'xeve'
 )
-optdepends=('nvidia-utils: for NVIDIA NVDEC/NVENC support'
-            'vpl-runtime: for Intel Quick Sync Video'
+optdepends=(
+    'nvidia-utils: for NVIDIA NVDEC/NVENC support'
+    'vpl-runtime: for Intel Quick Sync Video'
 )
-makedepends=('git'
-             'patchutils'
-             'clang'
-             'nasm'
-             'ffnvcodec-headers'
-             'opencl-headers'
-             'vulkan-headers'
-             # aur:
-             'amf-headers-git'
-             'decklink-sdk'
+makedepends=(
+    'git'
+    'patchutils'
+    'clang'
+    'nasm'
+    'ffnvcodec-headers'
+    'opencl-headers'
+    'vulkan-headers'
+    # aur:
+    'amf-headers-git'
+    'decklink-sdk'
 )
-provides=('libavcodec.so' 'libavdevice.so' 'libavfilter.so' 'libavformat.so'
-          'libavutil.so' 'libpostproc.so' 'libswscale.so' 'libswresample.so'
-          'ffmpeg' 'ffmpeg-full' 'ffmpeg-git')
+provides=(
+    'ffmpeg'
+    'ffmpeg-full'
+    'ffmpeg-git'
+    'libavcodec.so'
+    'libavdevice.so'
+    'libavfilter.so'
+    'libavformat.so'
+    'libavutil.so'
+    'libswscale.so'
+    'libswresample.so'
+)
 conflicts=('ffmpeg')
 source=('git+https://git.ffmpeg.org/ffmpeg.git'
         '010-ffmpeg-add-svt-hevc.patch'
@@ -162,12 +175,12 @@ source=('git+https://git.ffmpeg.org/ffmpeg.git'
         '060-ffmpeg-fix-cuda-nvcc-with-gcc14.patch'
         'LICENSE')
 sha256sums=('SKIP'
-            '8d5ea3d1e4e1b95abc3fbdb7d784a2cef7218f3decd4646e6781188996f51fb9'
+            'e29d7356dc871810d210414216ca487a682e209cadc55713f2469b8294a70469'
             'a164ebdc4d281352bf7ad1b179aae4aeb33f1191c444bed96cb8ab333c046f81'
-            'c57c964cacbb3ccef1d4f43e044e45cec52002d3eb993b7006be29dc54d0e79b'
+            'bfd7322aa61109052c8d63a31dc856109064afe42ec48a00b00a2c5d66edb63e'
             '391ce03d5e205210c5f136ee7fe7fd84bb420ff423462ed2123b63a19052debd'
             '26419f819d1f3e4d0534995b73d05a8195bc7c892b74c37c3880085af027515b'
-            'ce012d2a1fe30a654f7766e29fc38a3a19aefbc276f09bdfcaa91aaf7f5adf85'
+            'ca3d1a570f52672b679cb548d8034fbefd22b887014a21b4475efca9c7a25d81'
             '04a7176400907fd7db0d69116b99de49e582a6e176b3bfb36a03e50a4cb26a36')
 
 prepare() {

@@ -1,6 +1,6 @@
 --- a/configure
 +++ b/configure
-@@ -295,6 +295,7 @@ External library support:
+@@ -294,6 +294,7 @@ External library support:
    --enable-libvorbis       enable Vorbis en/decoding via libvorbis,
                             native implementation exists [no]
    --enable-libvpx          enable VP8 and VP9 de/encoding via libvpx [no]
@@ -8,7 +8,7 @@
    --enable-libvvenc        enable H.266/VVC encoding via vvenc [no]
    --enable-libwebp         enable WebP encoding via libwebp [no]
    --enable-libx264         enable H.264 encoding via x264 [no]
-@@ -1989,6 +1990,7 @@ EXTERNAL_LIBRARY_LIST="
+@@ -1988,6 +1989,7 @@ EXTERNAL_LIBRARY_LIST="
      libvmaf
      libvorbis
      libvpx
@@ -16,7 +16,7 @@
      libvvenc
      libwebp
      libxevd
-@@ -3627,6 +3629,7 @@ libvpx_vp8_decoder_deps="libvpx"
+@@ -3625,6 +3627,7 @@ libvpx_vp8_decoder_deps="libvpx"
  libvpx_vp8_encoder_deps="libvpx"
  libvpx_vp9_decoder_deps="libvpx"
  libvpx_vp9_encoder_deps="libvpx"
@@ -24,7 +24,7 @@
  libvvenc_encoder_deps="libvvenc"
  libwebp_encoder_deps="libwebp"
  libwebp_anim_encoder_deps="libwebp"
-@@ -7108,6 +7111,7 @@ enabled libvpx            && {
+@@ -7110,6 +7113,7 @@ enabled libvpx            && {
      fi
  }
  
@@ -32,8 +32,6 @@
  enabled libvvenc          && require_pkg_config libvvenc "libvvenc >= 1.6.1" "vvenc/vvenc.h" vvenc_get_version
  enabled libwebp           && {
      enabled libwebp_encoder      && require_pkg_config libwebp "libwebp >= 0.2.0" webp/encode.h WebPGetEncoderVersion
-diff --git a/libavcodec/Makefile b/libavcodec/Makefile
-index 9f5c2b52a9..f29151b73a 100644
 --- a/libavcodec/Makefile
 +++ b/libavcodec/Makefile
 @@ -1179,6 +1179,7 @@ OBJS-$(CONFIG_LIBVPX_VP8_DECODER)         += libvpxdec.o
@@ -44,8 +42,6 @@ index 9f5c2b52a9..f29151b73a 100644
  OBJS-$(CONFIG_LIBVVENC_ENCODER)           += libvvenc.o
  OBJS-$(CONFIG_LIBWEBP_ENCODER)            += libwebpenc_common.o libwebpenc.o
  OBJS-$(CONFIG_LIBWEBP_ANIM_ENCODER)       += libwebpenc_common.o libwebpenc_animencoder.o
-diff --git a/libavcodec/allcodecs.c b/libavcodec/allcodecs.c
-index 318d6baabd..6b9d159a0f 100644
 --- a/libavcodec/allcodecs.c
 +++ b/libavcodec/allcodecs.c
 @@ -810,6 +810,7 @@ extern const FFCodec ff_libvpx_vp8_encoder;
