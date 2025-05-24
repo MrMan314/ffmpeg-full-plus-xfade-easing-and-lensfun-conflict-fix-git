@@ -1,7 +1,7 @@
 # Maintainer: Daniel Bermond <dbermond@archlinux.org>
 
 pkgname=ffmpeg-full-git
-pkgver=7.2.r119449.g1b643e3f65
+pkgver=7.2.r119684.g670089304a
 pkgrel=1
 _svt_hevc_ver='ed80959ebb5586aa7763c91a397d44be1798587c'
 pkgdesc='Complete solution to record, convert and stream audio and video (all possible features including libfdk-aac; git version)'
@@ -61,7 +61,7 @@ depends=(
     'libmysofa'
     'libomxil-bellagio'
     'libopenmpt'
-    'libplacebo-git'
+    'libplacebo'
     'libpulse'
     'librabbitmq-c'
     'libraw1394'
