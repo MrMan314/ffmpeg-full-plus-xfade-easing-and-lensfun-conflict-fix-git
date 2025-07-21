@@ -1,7 +1,7 @@
 # Maintainer: Daniel Bermond <dbermond@archlinux.org>
 
 pkgname=ffmpeg-full-git
-pkgver=7.2.r120072.g11d1b71c31
+pkgver=7.2.r120333.gf944a70fcc
 pkgrel=1
 _svt_hevc_ver='ed80959ebb5586aa7763c91a397d44be1798587c'
 pkgdesc='Complete solution to record, convert and stream audio and video (all possible features including libfdk-aac; git version)'
@@ -85,7 +85,7 @@ depends=(
     'lv2'
     'ocl-icd'
     'openal'
-    'openapv-git'
+    'openapv'
     'opencore-amr'
     'opencv2'
     'openh264'
@@ -176,12 +176,12 @@ source=('git+https://git.ffmpeg.org/ffmpeg.git'
         '070-ffmpeg-lcevcdec4.0.0-fix.patch'
         'LICENSE')
 sha256sums=('SKIP'
-            '672af2bf9c710dbad9fc00f60d07b1099df2cfed711a0235b18670d01e8bb8c2'
+            '96a11444cead07b32a1dac051a88fe0b2f6d14ee6ae95a286a08d2dbf10363f8'
             'a164ebdc4d281352bf7ad1b179aae4aeb33f1191c444bed96cb8ab333c046f81'
-            'd86e614260c07682edd6862f64f08bc6373f6a91c2b02b81ba9c7380f4ad91e6'
+            '89192f9b0a63e8e83d024b79ad9fe6bf78f9bf083ca2e9c4db065792726c0234'
             '5cb2475de410f5696072687af88e91461cdacd1bb636ac14a3b348e3383934f1'
             '26419f819d1f3e4d0534995b73d05a8195bc7c892b74c37c3880085af027515b'
-            '2c12a24c80816a2c034076aab4a3156d6d5f30d1b3566e8d989f48da07f5860c'
+            '8acbe1b670479ac4747ae2a78a9d57b8467448dca1d758fb4ec6d08bea6469de'
             '60557f9842ad53a7e20e17f77dcea06cf53337a2bbb8679fd07e50086d582995'
             '04a7176400907fd7db0d69116b99de49e582a6e176b3bfb36a03e50a4cb26a36')
 
@@ -359,6 +359,7 @@ build() {
         --enable-libnpp \
         --enable-nvdec \
         --enable-nvenc \
+        --disable-ohcodec \
         --enable-omx \
         --enable-rkmpp \
         --enable-v4l2-m2m \
