@@ -1,7 +1,7 @@
 # Maintainer: Daniel Bermond <dbermond@archlinux.org>
 
 pkgname=ffmpeg-full-git
-pkgver=7.2.r120402.g7c5319e692
+pkgver=7.2.r120520.gbc012ac918
 pkgrel=1
 _svt_hevc_ver='ed80959ebb5586aa7763c91a397d44be1798587c'
 pkgdesc='Complete solution to record, convert and stream audio and video (all possible features including libfdk-aac; git version)'
@@ -38,7 +38,7 @@ depends=(
     'lame'
     'lcevcdec'
     'lcms2'
-    'lensfun-git'
+    'lensfun2'
     'libass'
     'libavc1394'
     'libbluray'
@@ -191,6 +191,9 @@ prepare() {
     patch -d ffmpeg -Np1 -i "${srcdir}/040-ffmpeg-add-av_stream_get_first_dts-for-chromium.patch"
     patch -d ffmpeg -Np1 -i "${srcdir}/050-ffmpeg-fix-cuda-nvcc-with-gcc14.patch"
     patch -d ffmpeg -Np1 -i "${srcdir}/060-ffmpeg-lcevcdec4.0.0-fix.patch"
+    curl -L https://github.com/scriptituk/xfade-easing/raw/main/src/vf_xfade.patch | patch -d ffmpeg -buNp0 -i -
+    sed -e "s/liblensfun lensfun lensfun.h/liblensfun lensfun2 lensfun.h/" -i ffmpeg/configure
+    curl -L https://github.com/scriptituk/xfade-easing/raw/main/src/xfade-easing.h -o ffmpeg/libavfilter/xfade-easing.h
 }
 
 pkgver() {
@@ -207,7 +210,7 @@ build() {
     export LDFLAGS+=' -L/opt/cuda/lib64'
     
     # fix build of libavfilter/asrc_flite.c with gcc 14
-    export CFLAGS+=' -Wno-incompatible-pointer-types'
+    export CFLAGS+=' -Wno-incompatible-pointer-types -Wno-int-conversion'
     
     ./configure \
         --prefix='/usr' \
@@ -353,7 +356,6 @@ build() {
         --enable-ffnvcodec \
         --enable-libdrm \
         --enable-libvpl \
-        --enable-libnpp \
         --enable-nvdec \
         --enable-nvenc \
         --disable-ohcodec \
