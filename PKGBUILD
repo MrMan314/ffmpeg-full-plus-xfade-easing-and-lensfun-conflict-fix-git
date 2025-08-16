@@ -1,9 +1,10 @@
 # Maintainer: Daniel Bermond <dbermond@archlinux.org>
 
 pkgname=ffmpeg-full-git
-pkgver=7.2.r120402.g7c5319e692
+pkgver=7.2.r120751.g1d06e8ddcd
 pkgrel=1
 _svt_hevc_ver='ed80959ebb5586aa7763c91a397d44be1798587c'
+_whispercpp_ver='1.7.6'
 pkgdesc='Complete solution to record, convert and stream audio and video (all possible features including libfdk-aac; git version)'
 arch=('x86_64')
 url='https://www.ffmpeg.org/'
@@ -145,6 +146,7 @@ makedepends=(
     'git'
     'patchutils'
     'clang'
+    'cmake'
     'nasm'
     'ffnvcodec-headers'
     'opencl-headers'
@@ -167,20 +169,24 @@ provides=(
 )
 conflicts=('ffmpeg')
 source=('git+https://git.ffmpeg.org/ffmpeg.git'
+        "https://github.com/ggml-org/whisper.cpp/archive/v${_whispercpp_ver}/whisper.cpp-${_whispercpp_ver}.tar.gz"
         '010-ffmpeg-add-svt-hevc.patch'
         "020-ffmpeg-add-svt-hevc-docs-g${_svt_hevc_ver:0:7}.patch"::"https://raw.githubusercontent.com/OpenVisualCloud/SVT-HEVC/${_svt_hevc_ver}/ffmpeg_plugin/0002-doc-Add-libsvt_hevc-encoder-docs.patch"
         '030-ffmpeg-add-svt-vp9.patch'
         '040-ffmpeg-add-av_stream_get_first_dts-for-chromium.patch'
         '050-ffmpeg-fix-cuda-nvcc-with-gcc14.patch'
         '060-ffmpeg-lcevcdec4.0.0-fix.patch'
+        '070-ffmpeg-whisper.cpp-fix-pkgconfig.patch'
         'LICENSE')
 sha256sums=('SKIP'
-            '96a11444cead07b32a1dac051a88fe0b2f6d14ee6ae95a286a08d2dbf10363f8'
+            '166140e9a6d8a36f787a2bd77f8f44dd64874f12dd8359ff7c1f4f9acb86202e'
+            'ab6db6b98f760e0550b6b528adea62aaca5809e744fc5379206f49743e888c59'
             'a164ebdc4d281352bf7ad1b179aae4aeb33f1191c444bed96cb8ab333c046f81'
-            '89192f9b0a63e8e83d024b79ad9fe6bf78f9bf083ca2e9c4db065792726c0234'
+            '355332093c4a19a7c1ca8b67b43b9fd2f591c7135d638790b3c0bd86b3209056'
             '5cb2475de410f5696072687af88e91461cdacd1bb636ac14a3b348e3383934f1'
-            '8acbe1b670479ac4747ae2a78a9d57b8467448dca1d758fb4ec6d08bea6469de'
+            'ef6e49248335232ac6a514f36023a4f8fd4f402d90d4a737a9fc409840c750a5'
             '60557f9842ad53a7e20e17f77dcea06cf53337a2bbb8679fd07e50086d582995'
+            '98b3d28cbd13bb575c602785f6b8cb0b66ea3128ab5a3a82fc1645822320c136'
             '04a7176400907fd7db0d69116b99de49e582a6e176b3bfb36a03e50a4cb26a36')
 
 prepare() {
@@ -191,6 +197,7 @@ prepare() {
     patch -d ffmpeg -Np1 -i "${srcdir}/040-ffmpeg-add-av_stream_get_first_dts-for-chromium.patch"
     patch -d ffmpeg -Np1 -i "${srcdir}/050-ffmpeg-fix-cuda-nvcc-with-gcc14.patch"
     patch -d ffmpeg -Np1 -i "${srcdir}/060-ffmpeg-lcevcdec4.0.0-fix.patch"
+    patch -d "whisper.cpp-${_whispercpp_ver}" -Np1 -i "${srcdir}/070-ffmpeg-whisper.cpp-fix-pkgconfig.patch"
 }
 
 pkgver() {
@@ -200,11 +207,23 @@ pkgver() {
 }
 
 build() {
+    # whisper.cpp AUR package is broken at the time of writing, building it locally as a static library for the time being
+    cmake -B build/whisper.cpp -S "whisper.cpp-${_whispercpp_ver}" \
+        -G 'Unix Makefiles' \
+        -DBUILD_SHARED_LIBS:BOOL='OFF' \
+        -DCMAKE_BUILD_TYPE:STRING='None' \
+        -DCMAKE_INSTALL_PREFIX:PATH="${srcdir}/staging" \
+        -DWHISPER_BUILD_EXAMPLES:BOOL='OFF' \
+        -DWHISPER_BUILD_TESTS:BOOL='OFF' \
+        -Wno-dev
+    cmake --build build/whisper.cpp --target install
+    
     cd ffmpeg
     printf '%s\n' '  -> Running ffmpeg configure script...'
     
     export CFLAGS+=' -isystem/opt/cuda/include'
     export LDFLAGS+=' -L/opt/cuda/lib64'
+    export PKG_CONFIG_PATH="${PKG_CONFIG_PATH:+"${PKG_CONFIG_PATH}:"}${srcdir}/staging/lib/pkgconfig"
     
     # fix build of libavfilter/asrc_flite.c with gcc 14
     export CFLAGS+=' -Wno-incompatible-pointer-types'
@@ -343,6 +362,7 @@ build() {
         --enable-sdl2 \
         --enable-vapoursynth \
         --enable-vulkan \
+        --enable-whisper \
         --enable-xlib \
         --enable-zlib \
         \
