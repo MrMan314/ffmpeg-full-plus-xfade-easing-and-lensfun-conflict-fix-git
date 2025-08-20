@@ -1,7 +1,7 @@
 # Maintainer: Daniel Bermond <dbermond@archlinux.org>
 
 pkgname=ffmpeg-full-git
-pkgver=7.2.r120751.g1d06e8ddcd
+pkgver=7.2.r120803.g67c15cf541
 pkgrel=1
 _svt_hevc_ver='ed80959ebb5586aa7763c91a397d44be1798587c'
 _whispercpp_ver='1.7.6'
@@ -39,7 +39,7 @@ depends=(
     'lame'
     'lcevcdec'
     'lcms2'
-    'lensfun-git'
+    'lensfun2'
     'libass'
     'libavc1394'
     'libbluray'
@@ -198,6 +198,9 @@ prepare() {
     patch -d ffmpeg -Np1 -i "${srcdir}/050-ffmpeg-fix-cuda-nvcc-with-gcc14.patch"
     patch -d ffmpeg -Np1 -i "${srcdir}/060-ffmpeg-lcevcdec4.0.0-fix.patch"
     patch -d "whisper.cpp-${_whispercpp_ver}" -Np1 -i "${srcdir}/070-ffmpeg-whisper.cpp-fix-pkgconfig.patch"
+    curl -L https://github.com/scriptituk/xfade-easing/raw/main/src/vf_xfade.patch | patch -d ffmpeg -buNp0 -i -
+    sed -e "s/liblensfun lensfun lensfun.h/liblensfun lensfun2 lensfun.h/" -i ffmpeg/configure
+    curl -L https://github.com/scriptituk/xfade-easing/raw/main/src/xfade-easing.h -o ffmpeg/libavfilter/xfade-easing.h
 }
 
 pkgver() {
@@ -226,7 +229,7 @@ build() {
     export PKG_CONFIG_PATH="${PKG_CONFIG_PATH:+"${PKG_CONFIG_PATH}:"}${srcdir}/staging/lib/pkgconfig"
     
     # fix build of libavfilter/asrc_flite.c with gcc 14
-    export CFLAGS+=' -Wno-incompatible-pointer-types'
+    export CFLAGS+=' -Wno-incompatible-pointer-types -Wno-int-conversion'
     
     ./configure \
         --prefix='/usr' \
@@ -373,7 +376,6 @@ build() {
         --enable-ffnvcodec \
         --enable-libdrm \
         --enable-libvpl \
-        --enable-libnpp \
         --enable-nvdec \
         --enable-nvenc \
         --disable-ohcodec \
