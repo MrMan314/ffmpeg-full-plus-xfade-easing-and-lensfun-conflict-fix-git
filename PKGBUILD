@@ -1,7 +1,7 @@
 # Maintainer: Daniel Bermond <dbermond@archlinux.org>
 
 pkgname=ffmpeg-full-git
-pkgver=7.2.r120803.g67c15cf541
+pkgver=8.1.r120821.g673f28b6cb
 pkgrel=1
 _svt_hevc_ver='ed80959ebb5586aa7763c91a397d44be1798587c'
 _whispercpp_ver='1.7.6'
@@ -197,7 +197,7 @@ prepare() {
     patch -d ffmpeg -Np1 -i "${srcdir}/040-ffmpeg-add-av_stream_get_first_dts-for-chromium.patch"
     patch -d ffmpeg -Np1 -i "${srcdir}/050-ffmpeg-fix-cuda-nvcc-with-gcc14.patch"
     patch -d ffmpeg -Np1 -i "${srcdir}/060-ffmpeg-lcevcdec4.0.0-fix.patch"
-    patch -d "whisper.cpp-${_whispercpp_ver}" -Np1 -i "${srcdir}/070-ffmpeg-whisper.cpp-fix-pkgconfig.patch"
+#/    patch -d "whisper.cpp-${_whispercpp_ver}" -Np1 -i "${srcdir}/070-ffmpeg-whisper.cpp-fix-pkgconfig.patch"
     curl -L https://github.com/scriptituk/xfade-easing/raw/main/src/vf_xfade.patch | patch -d ffmpeg -buNp0 -i -
     sed -e "s/liblensfun lensfun lensfun.h/liblensfun lensfun2 lensfun.h/" -i ffmpeg/configure
     curl -L https://github.com/scriptituk/xfade-easing/raw/main/src/xfade-easing.h -o ffmpeg/libavfilter/xfade-easing.h
@@ -211,15 +211,15 @@ pkgver() {
 
 build() {
     # whisper.cpp AUR package is broken at the time of writing, building it locally as a static library for the time being
-    cmake -B build/whisper.cpp -S "whisper.cpp-${_whispercpp_ver}" \
-        -G 'Unix Makefiles' \
-        -DBUILD_SHARED_LIBS:BOOL='OFF' \
-        -DCMAKE_BUILD_TYPE:STRING='None' \
-        -DCMAKE_INSTALL_PREFIX:PATH="${srcdir}/staging" \
-        -DWHISPER_BUILD_EXAMPLES:BOOL='OFF' \
-        -DWHISPER_BUILD_TESTS:BOOL='OFF' \
-        -Wno-dev
-    cmake --build build/whisper.cpp --target install
+#    cmake -B build/whisper.cpp -S "whisper.cpp-${_whispercpp_ver}" \
+#        -G 'Unix Makefiles' \
+#        -DBUILD_SHARED_LIBS:BOOL='OFF' \
+#        -DCMAKE_BUILD_TYPE:STRING='None' \
+#        -DCMAKE_INSTALL_PREFIX:PATH="${srcdir}/staging" \
+#        -DWHISPER_BUILD_EXAMPLES:BOOL='OFF' \
+#        -DWHISPER_BUILD_TESTS:BOOL='OFF' \
+#        -Wno-dev
+#    cmake --build build/whisper.cpp --target install
     
     cd ffmpeg
     printf '%s\n' '  -> Running ffmpeg configure script...'
@@ -365,7 +365,6 @@ build() {
         --enable-sdl2 \
         --enable-vapoursynth \
         --enable-vulkan \
-        --enable-whisper \
         --enable-xlib \
         --enable-zlib \
         \
