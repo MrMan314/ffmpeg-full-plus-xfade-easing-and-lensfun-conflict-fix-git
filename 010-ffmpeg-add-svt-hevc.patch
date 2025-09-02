@@ -1,6 +1,6 @@
 --- a/configure
 +++ b/configure
-@@ -339,6 +339,7 @@ External library support:
+@@ -342,6 +342,7 @@ External library support:
    --enable-whisper         enable whisper filter [no]
    --disable-xlib           disable xlib [autodetect]
    --disable-zlib           disable zlib [autodetect]
@@ -8,7 +8,7 @@
  
    The following libraries provide various hardware acceleration features:
    --disable-amf            disable AMF video encoding code [autodetect]
-@@ -1979,6 +1980,7 @@ EXTERNAL_LIBRARY_LIST="
+@@ -1982,6 +1983,7 @@ EXTERNAL_LIBRARY_LIST="
      libsrt
      libssh
      libsvtav1
@@ -16,7 +16,7 @@
      libtensorflow
      libtesseract
      libtheora
-@@ -3678,6 +3680,7 @@ vapoursynth_demuxer_deps="vapoursynth"
+@@ -3683,6 +3685,7 @@ vapoursynth_demuxer_deps="vapoursynth"
  videotoolbox_suggest="coreservices"
  videotoolbox_deps="corefoundation coremedia corevideo VTDecompressionSessionDecodeFrame"
  videotoolbox_encoder_deps="videotoolbox VTCompressionSessionPrepareToEncodeFrames"
@@ -24,7 +24,7 @@
  
  # demuxers / muxers
  ac3_demuxer_select="ac3_parser"
-@@ -7149,6 +7152,7 @@ enabled libssh            && require_pkg_config libssh "libssh >= 0.6.0" libssh/
+@@ -7161,6 +7164,7 @@ enabled libssh            && require_pkg_config libssh "libssh >= 0.6.0" libssh/
  enabled libspeex          && require_pkg_config libspeex speex speex/speex.h speex_decoder_init
  enabled libsrt            && require_pkg_config libsrt "srt >= 1.3.0" srt/srt.h srt_socket
  enabled libsvtav1         && require_pkg_config libsvtav1 "SvtAv1Enc >= 0.9.0" EbSvtAv1Enc.h svt_av1_enc_init_handle
@@ -34,7 +34,7 @@
  enabled libtheora         && require libtheora theora/theoraenc.h th_info_init -ltheoraenc -ltheoradec -logg
 --- a/libavcodec/Makefile
 +++ b/libavcodec/Makefile
-@@ -1201,6 +1201,7 @@ OBJS-$(CONFIG_LIBWEBP_ANIM_ENCODER)       += libwebpenc_common.o libwebpenc_anim
+@@ -1203,6 +1203,7 @@ OBJS-$(CONFIG_LIBWEBP_ANIM_ENCODER)       += libwebpenc_common.o libwebpenc_anim
  OBJS-$(CONFIG_LIBX262_ENCODER)            += libx264.o
  OBJS-$(CONFIG_LIBX264_ENCODER)            += libx264.o
  OBJS-$(CONFIG_LIBX265_ENCODER)            += libx265.o

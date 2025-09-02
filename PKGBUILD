@@ -1,7 +1,7 @@
 # Maintainer: Daniel Bermond <dbermond@archlinux.org>
 
 pkgname=ffmpeg-full-git
-pkgver=7.2.r120751.g1d06e8ddcd
+pkgver=8.1.r120952.ga700f0f72d
 pkgrel=1
 _svt_hevc_ver='ed80959ebb5586aa7763c91a397d44be1798587c'
 _whispercpp_ver='1.7.6'
@@ -13,7 +13,7 @@ depends=(
     'alsa-lib'
     'aom'
     'aribb24'
-    'avisynthplus'
+    'avisynthplus' # loaded on-demand by dlopen()
     'bzip2'
     'cairo'
     'celt'
@@ -23,19 +23,18 @@ depends=(
     'flite1'
     'fontconfig'
     'freetype2'
-    'frei0r-plugins'
+    'frei0r-plugins' # loaded on-demand by dlopen()
     'fribidi'
     'gcc-libs'
     'glib2'
     'glibc'
     'glslang'
-    'gmp'
     'gnutls'
     'gsm'
     'harfbuzz'
     'jack'
     'kvazaar'
-    'ladspa'
+    'ladspa' # loaded on-demand by dlopen()
     'lame'
     'lcevcdec'
     'lcms2'
@@ -52,7 +51,6 @@ depends=(
     'libdvdread'
     'libfdk-aac'
     'libgcrypt'
-    'libgl'
     'libgme'
     'libiec61883'
     'libilbc'
@@ -60,7 +58,6 @@ depends=(
     'liblc3'
     'libmodplug'
     'libmysofa'
-    'libomxil-bellagio'
     'libopenmpt'
     'libplacebo'
     'libpulse'
@@ -83,7 +80,6 @@ depends=(
     'libxv'
     'libwebp'
     'lilv'
-    'lv2'
     'ocl-icd'
     'openal'
     'openapv'
@@ -103,7 +99,6 @@ depends=(
     'snappy'
     'sndio'
     'speex'
-    'spirv-tools'
     'srt'
     'svt-av1'
     'svt-hevc'
@@ -111,10 +106,10 @@ depends=(
     'tesseract'
     'twolame'
     'v4l-utils'
-    'vapoursynth'
+    'vapoursynth' # loaded on-demand by dlopen()
     'vid.stab'
     'vmaf'
-    'vulkan-icd-loader'
+    'vulkan-icd-loader' # loaded on-demand by dlopen()
     'x264'
     'x265'
     'xvidcore'
@@ -139,11 +134,16 @@ depends=(
     'xeve'
 )
 optdepends=(
-    'nvidia-utils: for NVIDIA NVDEC/NVENC support'
+    'nvidia-utils: for NVIDIA CUVID/NVDEC/NVENC support'
     'vpl-runtime: for Intel Quick Sync Video'
 )
 makedepends=(
+    'amf-headers'
     'git'
+    'gmp'
+    'libgl'
+    'libomxil-bellagio'
+    'lv2'
     'patchutils'
     'clang'
     'cmake'
@@ -152,7 +152,6 @@ makedepends=(
     'opencl-headers'
     'vulkan-headers'
     # aur:
-    'amf-headers-git'
     'decklink-sdk'
 )
 provides=(
@@ -175,17 +174,15 @@ source=('git+https://git.ffmpeg.org/ffmpeg.git'
         '030-ffmpeg-add-svt-vp9.patch'
         '040-ffmpeg-add-av_stream_get_first_dts-for-chromium.patch'
         '050-ffmpeg-fix-cuda-nvcc-with-gcc14.patch'
-        '060-ffmpeg-lcevcdec4.0.0-fix.patch'
-        '070-ffmpeg-whisper.cpp-fix-pkgconfig.patch'
+        '060-ffmpeg-whisper.cpp-fix-pkgconfig.patch'
         'LICENSE')
 sha256sums=('SKIP'
             '166140e9a6d8a36f787a2bd77f8f44dd64874f12dd8359ff7c1f4f9acb86202e'
-            'ab6db6b98f760e0550b6b528adea62aaca5809e744fc5379206f49743e888c59'
+            'f436c9e0663885e1a2a3898166a72bf675fe091e359870ba9ce433588bb654f4'
             'a164ebdc4d281352bf7ad1b179aae4aeb33f1191c444bed96cb8ab333c046f81'
-            '355332093c4a19a7c1ca8b67b43b9fd2f591c7135d638790b3c0bd86b3209056'
+            '4979e482ea9fbfb481e4ddbf21716868df74614486c56d060bc84da6f224c0b0'
             '5cb2475de410f5696072687af88e91461cdacd1bb636ac14a3b348e3383934f1'
-            'ef6e49248335232ac6a514f36023a4f8fd4f402d90d4a737a9fc409840c750a5'
-            '60557f9842ad53a7e20e17f77dcea06cf53337a2bbb8679fd07e50086d582995'
+            'c14d78ce9d7dfbf3f822e0ed276c6ded7090444fb60069d87f1abb0dc4d28603'
             '98b3d28cbd13bb575c602785f6b8cb0b66ea3128ab5a3a82fc1645822320c136'
             '04a7176400907fd7db0d69116b99de49e582a6e176b3bfb36a03e50a4cb26a36')
 
@@ -196,8 +193,7 @@ prepare() {
     patch -d ffmpeg -Np1 -i "${srcdir}/030-ffmpeg-add-svt-vp9.patch"
     patch -d ffmpeg -Np1 -i "${srcdir}/040-ffmpeg-add-av_stream_get_first_dts-for-chromium.patch"
     patch -d ffmpeg -Np1 -i "${srcdir}/050-ffmpeg-fix-cuda-nvcc-with-gcc14.patch"
-    patch -d ffmpeg -Np1 -i "${srcdir}/060-ffmpeg-lcevcdec4.0.0-fix.patch"
-    patch -d "whisper.cpp-${_whispercpp_ver}" -Np1 -i "${srcdir}/070-ffmpeg-whisper.cpp-fix-pkgconfig.patch"
+    patch -d "whisper.cpp-${_whispercpp_ver}" -Np1 -i "${srcdir}/060-ffmpeg-whisper.cpp-fix-pkgconfig.patch"
 }
 
 pkgver() {
@@ -207,7 +203,8 @@ pkgver() {
 }
 
 build() {
-    # whisper.cpp AUR package is broken at the time of writing, building it locally as a static library for the time being
+    # whisper.cpp AUR package conflicts with imagemagick at the time of writing
+    # building it locally as a static library for the time being, as imagemagick is a commonly used package (71% in pkgstats)
     cmake -B build/whisper.cpp -S "whisper.cpp-${_whispercpp_ver}" \
         -G 'Unix Makefiles' \
         -DBUILD_SHARED_LIBS:BOOL='OFF' \

@@ -1,6 +1,6 @@
 --- a/configure
 +++ b/configure
-@@ -6897,7 +6897,7 @@ if [ -z "$nvccflags" ]; then
+@@ -6909,7 +6909,7 @@ if [ -z "$nvccflags" ]; then
      nvccflags=$nvccflags_default
  fi
  
