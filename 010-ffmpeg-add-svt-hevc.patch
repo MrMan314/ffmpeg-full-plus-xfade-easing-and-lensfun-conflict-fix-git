@@ -34,7 +34,7 @@
  enabled libtheora         && require libtheora theora/theoraenc.h th_info_init -ltheoraenc -ltheoradec -logg
 --- a/libavcodec/Makefile
 +++ b/libavcodec/Makefile
-@@ -1203,6 +1203,7 @@ OBJS-$(CONFIG_LIBWEBP_ANIM_ENCODER)       += libwebpenc_common.o libwebpenc_anim
+@@ -1205,6 +1205,7 @@ OBJS-$(CONFIG_LIBWEBP_ANIM_ENCODER)       += libwebpenc_common.o libwebpenc_anim
  OBJS-$(CONFIG_LIBX262_ENCODER)            += libx264.o
  OBJS-$(CONFIG_LIBX264_ENCODER)            += libx264.o
  OBJS-$(CONFIG_LIBX265_ENCODER)            += libx265.o

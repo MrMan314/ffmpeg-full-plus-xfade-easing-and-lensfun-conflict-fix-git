@@ -1,9 +1,10 @@
 # Maintainer: Daniel Bermond <dbermond@archlinux.org>
 
 pkgname=ffmpeg-full-git
-pkgver=8.1.r120952.ga700f0f72d
+pkgver=8.1.r120972.g6696a9b8bd
 pkgrel=1
 _svt_hevc_ver='ed80959ebb5586aa7763c91a397d44be1798587c'
+_obs_studio_ver='31.1.2'
 _whispercpp_ver='1.7.6'
 pkgdesc='Complete solution to record, convert and stream audio and video (all possible features including libfdk-aac; git version)'
 arch=('x86_64')
@@ -151,8 +152,6 @@ makedepends=(
     'ffnvcodec-headers'
     'opencl-headers'
     'vulkan-headers'
-    # aur:
-    'decklink-sdk'
 )
 provides=(
     'ffmpeg'
@@ -168,6 +167,7 @@ provides=(
 )
 conflicts=('ffmpeg')
 source=('git+https://git.ffmpeg.org/ffmpeg.git'
+        "https://github.com/obsproject/obs-studio/archive/${_obs_studio_ver}/obs-studio-${_obs_studio_ver}.tar.gz"
         "https://github.com/ggml-org/whisper.cpp/archive/v${_whispercpp_ver}/whisper.cpp-${_whispercpp_ver}.tar.gz"
         '010-ffmpeg-add-svt-hevc.patch'
         "020-ffmpeg-add-svt-hevc-docs-g${_svt_hevc_ver:0:7}.patch"::"https://raw.githubusercontent.com/OpenVisualCloud/SVT-HEVC/${_svt_hevc_ver}/ffmpeg_plugin/0002-doc-Add-libsvt_hevc-encoder-docs.patch"
@@ -177,10 +177,11 @@ source=('git+https://git.ffmpeg.org/ffmpeg.git'
         '060-ffmpeg-whisper.cpp-fix-pkgconfig.patch'
         'LICENSE')
 sha256sums=('SKIP'
+            '11d7b5fbb234e926b04b921203c152517a928032e757689d964c5f9a0a9a4157'
             '166140e9a6d8a36f787a2bd77f8f44dd64874f12dd8359ff7c1f4f9acb86202e'
-            'f436c9e0663885e1a2a3898166a72bf675fe091e359870ba9ce433588bb654f4'
+            'd7ec1f0f140402b36725724eab94cf05a96aa869d90e94f5a4d0ea5bdec0873b'
             'a164ebdc4d281352bf7ad1b179aae4aeb33f1191c444bed96cb8ab333c046f81'
-            '4979e482ea9fbfb481e4ddbf21716868df74614486c56d060bc84da6f224c0b0'
+            'ae5761775171b728053d1b04a910c53ab54a82d58fd6042de5cd8f4ab3b2b8fc'
             '5cb2475de410f5696072687af88e91461cdacd1bb636ac14a3b348e3383934f1'
             'c14d78ce9d7dfbf3f822e0ed276c6ded7090444fb60069d87f1abb0dc4d28603'
             '98b3d28cbd13bb575c602785f6b8cb0b66ea3128ab5a3a82fc1645822320c136'
@@ -219,6 +220,7 @@ build() {
     printf '%s\n' '  -> Running ffmpeg configure script...'
     
     export CFLAGS+=' -isystem/opt/cuda/include'
+    export CFLAGS+=" -isystem${srcdir}/obs-studio-${_obs_studio_ver}/plugins/decklink/linux/decklink-sdk"
     export LDFLAGS+=' -L/opt/cuda/lib64'
     export PKG_CONFIG_PATH="${PKG_CONFIG_PATH:+"${PKG_CONFIG_PATH}:"}${srcdir}/staging/lib/pkgconfig"
     

@@ -34,7 +34,7 @@
      enabled libwebp_encoder      && require_pkg_config libwebp "libwebp >= 0.2.0" webp/encode.h WebPGetEncoderVersion
 --- a/libavcodec/Makefile
 +++ b/libavcodec/Makefile
-@@ -1197,6 +1197,7 @@ OBJS-$(CONFIG_LIBVPX_VP8_DECODER)         += libvpxdec.o
+@@ -1199,6 +1199,7 @@ OBJS-$(CONFIG_LIBVPX_VP8_DECODER)         += libvpxdec.o
  OBJS-$(CONFIG_LIBVPX_VP8_ENCODER)         += libvpxenc.o
  OBJS-$(CONFIG_LIBVPX_VP9_DECODER)         += libvpxdec.o
  OBJS-$(CONFIG_LIBVPX_VP9_ENCODER)         += libvpxenc.o
