@@ -1,7 +1,7 @@
 # Maintainer: Daniel Bermond <dbermond@archlinux.org>
 
 pkgname=ffmpeg-full-git
-pkgver=8.1.r120972.g6696a9b8bd
+pkgver=8.1.r121059.g9e3c07f2df
 pkgrel=1
 _svt_hevc_ver='ed80959ebb5586aa7763c91a397d44be1798587c'
 _obs_studio_ver='31.1.2'
@@ -179,11 +179,11 @@ source=('git+https://git.ffmpeg.org/ffmpeg.git'
 sha256sums=('SKIP'
             '11d7b5fbb234e926b04b921203c152517a928032e757689d964c5f9a0a9a4157'
             '166140e9a6d8a36f787a2bd77f8f44dd64874f12dd8359ff7c1f4f9acb86202e'
-            'd7ec1f0f140402b36725724eab94cf05a96aa869d90e94f5a4d0ea5bdec0873b'
+            'b09dedcc5ea36532aac724b9c72cde9ccf1e03b5b0277b37a6227ea7c8f82374'
             'a164ebdc4d281352bf7ad1b179aae4aeb33f1191c444bed96cb8ab333c046f81'
-            'ae5761775171b728053d1b04a910c53ab54a82d58fd6042de5cd8f4ab3b2b8fc'
+            '3cc4f0b73044593e1fe6a31b6670cde85d516c0e40dffd8117505c7f39f9693e'
             '5cb2475de410f5696072687af88e91461cdacd1bb636ac14a3b348e3383934f1'
-            'c14d78ce9d7dfbf3f822e0ed276c6ded7090444fb60069d87f1abb0dc4d28603'
+            '881a1ea3f8b5c933fe83845837b2c27277bf8194cecb3032465b78b5ed883d74'
             '98b3d28cbd13bb575c602785f6b8cb0b66ea3128ab5a3a82fc1645822320c136'
             '04a7176400907fd7db0d69116b99de49e582a6e176b3bfb36a03e50a4cb26a36')
 
@@ -219,10 +219,12 @@ build() {
     cd ffmpeg
     printf '%s\n' '  -> Running ffmpeg configure script...'
     
+    local _decklink_include="-isystem${srcdir}/obs-studio-${_obs_studio_ver}/plugins/decklink/linux/decklink-sdk"
     export CFLAGS+=' -isystem/opt/cuda/include'
-    export CFLAGS+=" -isystem${srcdir}/obs-studio-${_obs_studio_ver}/plugins/decklink/linux/decklink-sdk"
+    export CFLAGS+=" ${_decklink_include}"
+    export CXXFLAGS+=" ${_decklink_include}"
     export LDFLAGS+=' -L/opt/cuda/lib64'
-    export PKG_CONFIG_PATH="${PKG_CONFIG_PATH:+"${PKG_CONFIG_PATH}:"}${srcdir}/staging/lib/pkgconfig"
+    export PKG_CONFIG_PATH="${srcdir}/staging/lib/pkgconfig${PKG_CONFIG_PATH:+":${PKG_CONFIG_PATH}"}"
     
     # fix build of libavfilter/asrc_flite.c with gcc 14
     export CFLAGS+=' -Wno-incompatible-pointer-types'
