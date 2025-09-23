@@ -2,7 +2,7 @@
 
 pkgname=ffmpeg-full-git
 pkgver=8.1.r121188.g5c9b2027bc
-pkgrel=1
+pkgrel=2
 _svt_hevc_ver='ed80959ebb5586aa7763c91a397d44be1798587c'
 _obs_studio_ver='31.1.2'
 _whispercpp_ver='1.7.6'
@@ -19,7 +19,7 @@ depends=(
     'cairo'
     'celt'
     'codec2'
-    'cuda'
+    
     'dav1d'
     'flite1'
     'fontconfig'
@@ -147,6 +147,7 @@ makedepends=(
     'lv2'
     'patchutils'
     'clang'
+    'cuda'
     'cmake'
     'nasm'
     'ffnvcodec-headers'
