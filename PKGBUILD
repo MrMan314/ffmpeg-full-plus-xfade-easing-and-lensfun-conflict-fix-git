@@ -1,7 +1,7 @@
 # Maintainer: Daniel Bermond <dbermond@archlinux.org>
 
 pkgname=ffmpeg-full-git
-pkgver=8.1.r121059.g9e3c07f2df
+pkgver=8.1.r121188.g5c9b2027bc
 pkgrel=1
 _svt_hevc_ver='ed80959ebb5586aa7763c91a397d44be1798587c'
 _obs_studio_ver='31.1.2'
@@ -179,11 +179,11 @@ source=('git+https://git.ffmpeg.org/ffmpeg.git'
 sha256sums=('SKIP'
             '11d7b5fbb234e926b04b921203c152517a928032e757689d964c5f9a0a9a4157'
             '166140e9a6d8a36f787a2bd77f8f44dd64874f12dd8359ff7c1f4f9acb86202e'
-            'b09dedcc5ea36532aac724b9c72cde9ccf1e03b5b0277b37a6227ea7c8f82374'
+            'b3c8e5698704b868fccb0a2c5fa0ac32c2a206ae0e32c3d5066d753f68fe6507'
             'a164ebdc4d281352bf7ad1b179aae4aeb33f1191c444bed96cb8ab333c046f81'
-            '3cc4f0b73044593e1fe6a31b6670cde85d516c0e40dffd8117505c7f39f9693e'
+            'd7639c564e4706f2e22d7f36ccedcee2a9dd2fb3ffc0c7b1f7d2b28e63dde522'
             '5cb2475de410f5696072687af88e91461cdacd1bb636ac14a3b348e3383934f1'
-            '881a1ea3f8b5c933fe83845837b2c27277bf8194cecb3032465b78b5ed883d74'
+            'a0b366985410fa569e8c8c6108c11fd29e6d59cbd06605b8a3eb5ae0504e2452'
             '98b3d28cbd13bb575c602785f6b8cb0b66ea3128ab5a3a82fc1645822320c136'
             '04a7176400907fd7db0d69116b99de49e582a6e176b3bfb36a03e50a4cb26a36')
 
@@ -374,7 +374,7 @@ build() {
         --enable-ffnvcodec \
         --enable-libdrm \
         --enable-libvpl \
-        --enable-libnpp \
+        --disable-libnpp \
         --enable-nvdec \
         --enable-nvenc \
         --disable-ohcodec \
