@@ -1,8 +1,8 @@
 # Maintainer: Daniel Bermond <dbermond@archlinux.org>
 
 pkgname=ffmpeg-full-git
-pkgver=8.1.r121188.g5c9b2027bc
-pkgrel=2
+pkgver=8.1.r121199.g5cb6d2221a
+pkgrel=1
 _svt_hevc_ver='ed80959ebb5586aa7763c91a397d44be1798587c'
 _obs_studio_ver='31.1.2'
 _whispercpp_ver='1.7.6'
@@ -19,7 +19,6 @@ depends=(
     'cairo'
     'celt'
     'codec2'
-    
     'dav1d'
     'flite1'
     'fontconfig'
@@ -81,6 +80,7 @@ depends=(
     'libxv'
     'libwebp'
     'lilv'
+    'mpeghdec'
     'ocl-icd'
     'openal'
     'openapv'
@@ -290,6 +290,7 @@ build() {
         --enable-liblensfun \
         --enable-libmodplug \
         --enable-libmp3lame \
+        --enable-libmpeghdec \
         --enable-liboapv \
         --enable-libopencore-amrnb \
         --enable-libopencore-amrwb \
