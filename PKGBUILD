@@ -1,14 +1,14 @@
 # Maintainer: Daniel Bermond <dbermond@archlinux.org>
 
 pkgname=ffmpeg-full-git
-pkgver=8.1.r121199.g5cb6d2221a
+pkgver=8.1.r121328.ge05f8acabf
 pkgrel=1
 _svt_hevc_ver='ed80959ebb5586aa7763c91a397d44be1798587c'
-_obs_studio_ver='31.1.2'
-_whispercpp_ver='1.7.6'
+_obs_studio_ver='32.0.1'
+_whispercpp_ver='1.8.0'
 pkgdesc='Complete solution to record, convert and stream audio and video (all possible features including libfdk-aac; git version)'
 arch=('x86_64')
-url='https://www.ffmpeg.org/'
+url='https:/ffmpeg.org/'
 license=('LicenseRef-nonfree-and-unredistributable')
 depends=(
     'alsa-lib'
@@ -18,8 +18,10 @@ depends=(
     'bzip2'
     'cairo'
     'celt'
+    'chromaprint-fftw'
     'codec2'
     'dav1d'
+    'davs2'
     'flite1'
     'fontconfig'
     'freetype2'
@@ -39,6 +41,7 @@ depends=(
     'lcevcdec'
     'lcms2'
     'lensfun-git'
+    'libaribcaption'
     'libass'
     'libavc1394'
     'libbluray'
@@ -55,6 +58,7 @@ depends=(
     'libiec61883'
     'libilbc'
     'libjxl'
+    'libklvanc'
     'liblc3'
     'libmodplug'
     'libmysofa'
@@ -93,9 +97,11 @@ depends=(
     'qrencode'
     'quirc'
     'rav1e'
+    'rockchip-mpp'
     'rtmpdump'
     'rubberband'
     'sdl2'
+    'shine'
     'smbclient'
     'snappy'
     'sndio'
@@ -106,54 +112,43 @@ depends=(
     'svt-vp9'
     'tesseract'
     'twolame'
+    'uavs3d-git'
     'v4l-utils'
     'vapoursynth' # loaded on-demand by dlopen()
     'vid.stab'
     'vmaf'
+    'vo-amrwbenc'
     'vulkan-icd-loader' # loaded on-demand by dlopen()
+    'vvenc'
     'x264'
     'x265'
+    'xavs'
+    'xavs2'
+    'xevd'
+    'xeve'
     'xvidcore'
     'xz'
     'zeromq'
     'zimg'
     'zlib'
-    'zvbi'
-    # aur:
-    'chromaprint-fftw'
-    'davs2'
-    'libaribcaption'
-    'libklvanc'
-    'rockchip-mpp'
-    'shine'
-    'uavs3d-git'
-    'vo-amrwbenc'
-    'vvenc'
-    'xavs'
-    'xavs2'
-    'xevd'
-    'xeve'
-)
+    'zvbi')
 optdepends=(
     'nvidia-utils: for NVIDIA CUVID/NVDEC/NVENC support'
-    'vpl-runtime: for Intel Quick Sync Video'
-)
+    'vpl-runtime: for Intel Quick Sync Video')
 makedepends=(
     'amf-headers'
+    'clang'
+    'cmake'
+    'cuda'
+    'ffnvcodec-headers'
     'git'
     'gmp'
     'libgl'
     'libomxil-bellagio'
     'lv2'
-    'patchutils'
-    'clang'
-    'cuda'
-    'cmake'
     'nasm'
-    'ffnvcodec-headers'
     'opencl-headers'
-    'vulkan-headers'
-)
+    'vulkan-headers')
 provides=(
     'ffmpeg'
     'ffmpeg-full'
@@ -164,8 +159,7 @@ provides=(
     'libavformat.so'
     'libavutil.so'
     'libswscale.so'
-    'libswresample.so'
-)
+    'libswresample.so')
 conflicts=('ffmpeg')
 source=('git+https://git.ffmpeg.org/ffmpeg.git'
         "https://github.com/obsproject/obs-studio/archive/${_obs_studio_ver}/obs-studio-${_obs_studio_ver}.tar.gz"
@@ -178,13 +172,13 @@ source=('git+https://git.ffmpeg.org/ffmpeg.git'
         '060-ffmpeg-whisper.cpp-fix-pkgconfig.patch'
         'LICENSE')
 sha256sums=('SKIP'
-            '11d7b5fbb234e926b04b921203c152517a928032e757689d964c5f9a0a9a4157'
-            '166140e9a6d8a36f787a2bd77f8f44dd64874f12dd8359ff7c1f4f9acb86202e'
-            'b3c8e5698704b868fccb0a2c5fa0ac32c2a206ae0e32c3d5066d753f68fe6507'
+            '906278ccedb5ed919e586697467eb7fa4205fceeda127386ce5b74026113ba96'
+            'c006a5e472ee41e7a733d0bf7326e339c8b281d3a91a1c8a35468fa0a051940f'
+            'f95d287e2b3f0c61504f5678fe012498c9f9859d9e3f3a8bab26823a75b32bb5'
             'a164ebdc4d281352bf7ad1b179aae4aeb33f1191c444bed96cb8ab333c046f81'
-            'd7639c564e4706f2e22d7f36ccedcee2a9dd2fb3ffc0c7b1f7d2b28e63dde522'
-            '5cb2475de410f5696072687af88e91461cdacd1bb636ac14a3b348e3383934f1'
-            'a0b366985410fa569e8c8c6108c11fd29e6d59cbd06605b8a3eb5ae0504e2452'
+            'c50b08ad156f6f4a9161d831c0464798bf8aced7d63f3edd37b731c35d85d2ed'
+            '1c4f328bfb0dfedf4478f7b3659bcd08c591823a389b9e9e4eb8c35b0b3e0356'
+            '59e7056ca26c4267908380943dad53fe0db67b6dcfc64fdb28bc5752f1390b9b'
             '98b3d28cbd13bb575c602785f6b8cb0b66ea3128ab5a3a82fc1645822320c136'
             '04a7176400907fd7db0d69116b99de49e582a6e176b3bfb36a03e50a4cb26a36')
 
@@ -206,7 +200,7 @@ pkgver() {
 
 build() {
     # whisper.cpp AUR package conflicts with imagemagick at the time of writing
-    # building it locally as a static library for the time being, as imagemagick is a commonly used package (71% in pkgstats)
+    # building it locally as a static library for the time being, as imagemagick is a commonly used package (high usage in pkgstats)
     cmake -B build/whisper.cpp -S "whisper.cpp-${_whispercpp_ver}" \
         -G 'Unix Makefiles' \
         -DBUILD_SHARED_LIBS:BOOL='OFF' \
@@ -228,7 +222,7 @@ build() {
     export PKG_CONFIG_PATH="${srcdir}/staging/lib/pkgconfig${PKG_CONFIG_PATH:+":${PKG_CONFIG_PATH}"}"
     
     # fix build of libavfilter/asrc_flite.c with gcc 14
-    export CFLAGS+=' -Wno-incompatible-pointer-types'
+    export CFLAGS+=' -Wno-error=incompatible-pointer-types'
     
     ./configure \
         --prefix='/usr' \
