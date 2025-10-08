@@ -1,8 +1,8 @@
 pkgbase = ffmpeg-full-git
 	pkgdesc = Complete solution to record, convert and stream audio and video (all possible features including libfdk-aac; git version)
-	pkgver = 8.1.r121328.ge05f8acabf
+	pkgver = 8.1.r121357.g7896cc67c1
 	pkgrel = 1
-	url = https:/ffmpeg.org/
+	url = https://ffmpeg.org/
 	arch = x86_64
 	license = LicenseRef-nonfree-and-unredistributable
 	makedepends = amf-headers

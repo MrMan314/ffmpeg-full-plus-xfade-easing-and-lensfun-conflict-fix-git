@@ -1,14 +1,14 @@
 # Maintainer: Daniel Bermond <dbermond@archlinux.org>
 
 pkgname=ffmpeg-full-git
-pkgver=8.1.r121328.ge05f8acabf
+pkgver=8.1.r121357.g7896cc67c1
 pkgrel=1
 _svt_hevc_ver='ed80959ebb5586aa7763c91a397d44be1798587c'
 _obs_studio_ver='32.0.1'
 _whispercpp_ver='1.8.0'
 pkgdesc='Complete solution to record, convert and stream audio and video (all possible features including libfdk-aac; git version)'
 arch=('x86_64')
-url='https:/ffmpeg.org/'
+url='https://ffmpeg.org/'
 license=('LicenseRef-nonfree-and-unredistributable')
 depends=(
     'alsa-lib'
