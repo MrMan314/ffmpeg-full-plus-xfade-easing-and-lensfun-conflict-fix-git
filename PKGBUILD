@@ -1,7 +1,8 @@
 # Maintainer: Daniel Bermond <dbermond@archlinux.org>
+# Maintainer: Felix Zhang <mrman@mrman314.tech>
 
-pkgname=ffmpeg-full-git
-pkgver=8.1.r121735.gbe99d2c0b2
+pkgname=ffmpeg-full-with-xfade-easing-git
+pkgver=8.1.r121420.gce9d181444
 pkgrel=1
 _svt_hevc_ver='ed80959ebb5586aa7763c91a397d44be1798587c'
 _obs_studio_ver='32.0.2'
@@ -41,6 +42,7 @@ depends=(
     'lcevcdec'
     'lcms2'
     'libaribcaption'
+    'lensfun2'
     'libass'
     'libavc1394'
     'libbluray'
@@ -191,6 +193,9 @@ prepare() {
     patch -d ffmpeg -Np1 -i "${srcdir}/040-ffmpeg-add-av_stream_get_first_dts-for-chromium.patch"
     patch -d ffmpeg -Np1 -i "${srcdir}/050-ffmpeg-fix-cuda-nvcc-with-gcc14.patch"
     patch -d "whisper.cpp-${_whispercpp_ver}" -Np1 -i "${srcdir}/060-ffmpeg-whisper.cpp-fix-pkgconfig.patch"
+    curl -L https://github.com/scriptituk/xfade-easing/raw/main/src/vf_xfade.patch | patch -d ffmpeg -buNp0 -i -
+    sed -e "s/liblensfun lensfun lensfun.h/liblensfun lensfun2 lensfun.h/" -i ffmpeg/configure
+    curl -L https://github.com/scriptituk/xfade-easing/raw/main/src/xfade-easing.h -o ffmpeg/libavfilter/xfade-easing.h
 }
 
 pkgver() {
@@ -397,7 +402,7 @@ build() {
         --enable-nvenc \
         --disable-ohcodec \
         --enable-omx \
-        --enable-rkmpp \
+        --disable-rkmpp \
         --enable-v4l2-m2m \
         --enable-vaapi \
         --enable-vdpau
