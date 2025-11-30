@@ -2,7 +2,7 @@
 # Maintainer: Felix Zhang <mrman@mrman314.tech>
 
 pkgname=ffmpeg-full-with-xfade-easing-git
-pkgver=8.1.r121420.gce9d181444
+pkgver=8.1.r121937.g89f984e3d1
 pkgrel=1
 _svt_hevc_ver='ed80959ebb5586aa7763c91a397d44be1798587c'
 _obs_studio_ver='32.0.2'
@@ -163,7 +163,6 @@ provides=(
     'libswresample.so')
 conflicts=('ffmpeg')
 source=('git+https://git.ffmpeg.org/ffmpeg.git'
-        'git+https://github.com/lensfun/lensfun.git'
         "https://github.com/obsproject/obs-studio/archive/${_obs_studio_ver}/obs-studio-${_obs_studio_ver}.tar.gz"
         "https://github.com/ggml-org/whisper.cpp/archive/v${_whispercpp_ver}/whisper.cpp-${_whispercpp_ver}.tar.gz"
         '010-ffmpeg-add-svt-hevc.patch'
@@ -174,7 +173,6 @@ source=('git+https://git.ffmpeg.org/ffmpeg.git'
         '060-ffmpeg-whisper.cpp-fix-pkgconfig.patch'
         'LICENSE')
 sha256sums=('SKIP'
-            'SKIP'
             '39e99b9fbdc77e7e87cfd9c7e8709d1d427627bad5b21b791019c887c8598d13'
             'bcee25589bb8052d9e155369f6759a05729a2022d2a8085c1aa4345108523077'
             'c774053b7279fc79966491dac275cded87eff0483feeb42b52e4f727f746a984'
@@ -215,20 +213,6 @@ build() {
         '-DCMAKE_BUILD_TYPE:STRING=None'
         "-DCMAKE_INSTALL_PREFIX:PATH=${_stagingdir}"
         '-Wno-dev')
-    
-    # ffmpeg requires lensfun git master, but lensfun-git package wrongly installs its files to non-standard locations:
-    # https://aur.archlinux.org/cgit/aur.git/commit/?h=lensfun-git&id=7b7a2d4890df59cde62c7dbfde3cefd7868a2707
-    # building it locally as a static library for the time being - this also have the benefit of avoid rebuilding packages
-    # requiring lensfun, like gegl (required for gimp, a commonly used package), as lensfun git master have a soname bump
-    cmake -B build/lensfun -S lensfun \
-        "${_cmake_opts[@]}" \
-        -DBUILD_STATIC:BOOL='ON' \
-        -DINSTALL_PYTHON_MODULE:BOOL='OFF' \
-        -DINSTALL_HELPER_SCRIPTS:BOOL='OFF'
-    cmake --build build/lensfun --target install
-    sed -i \
-        -e 's/\(-llensfun\)/\1 -lglib-2.0 -lstdc++/' \
-        -e '/Cflags: /s/$/ -DCONF_LENSFUN_STATIC/' "${_pkgconfigdir}/lensfun.pc"
     
     # whisper.cpp AUR package conflicts with imagemagick at the time of writing
     # building it locally as a static library for the time being, as imagemagick is a commonly used package (high usage in pkgstats)
